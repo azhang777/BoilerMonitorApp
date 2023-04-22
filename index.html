@@ -3,7 +3,7 @@
 <html lang=en manifest="manifest.appcache">
 
 <head>
-  <title>Thyroid Cancer Aide</title>
+  <title>Boiler Monitor</title>
 
   <!--Adjusting the page on mobile screen  -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -40,7 +40,7 @@
       <h1>Disclaimer</h1>
     </div>
     <div data-role="content">
-      Precaution. Beware of spaghetti code ahead!
+      The Boiler Monitor App is provided for informational purposes only and is not a substitute for professional advice. The App is provided "as is" without any warranties, and the developers and/or owners of the App are not responsible for any damages or losses arising from its use. The App may contain links to third-party websites, but the developers and/or owners do not have control over their content and disclaim any responsibility for any damages or losses incurred from their use. Use the App at your own risk and in compliance with all applicable laws and regulations.
       <br>
       <a href="#pageBoilerInfo" id="noticeYes" data-role="button"
       data-icon="forward" data-mini="false">Yes</a>
@@ -89,7 +89,7 @@
           required>
         </div>
         <div data-role="fieldcontain">
-          <label for="maxTemperature" >Maximum Temperature °C: </label>
+          <label for="maxTemperature" >Maximum Temperature °F: </label>
           <input type="number" placeholder="Celcius"id="maxTemperature" data-mini="false" min="0" max="200" required>
         </div>
         <div data-role="fieldcontain">
@@ -131,6 +131,14 @@
       <h1>Records</h1>
     </div>
     <!--Add information-->
+    <div data-role="fieldcontain" id="divUserSection">
+    </div>
+    <h3 align="center">History</h3>
+    <div data-role="fieldcontain">
+      <!-- Records Table -->
+      <table id="tblRecords" class="ui-responsive table-stroke">
+      </table>
+    </div>
       <div data-role="fieldcontain">
         <a href="#pageNewRecordForm" id="btnAddRecord" data-role="button"
         data-icon="plus">Add New Entry</a>
@@ -150,6 +158,30 @@
       <h1>New Record</h1>
     </div>
     <!--Add information-->
+    <div data-role="content">
+      <form id="frmNewRecordForm" action="">
+        <div data-role="fieldcontain">
+          <div data-role="fieldcontain">
+            <label for="datExamDate">Date: </label>
+            <input type="date" name="datExamDate" data-mini="false"
+            id="datExamDate" value="">
+          </div>
+          <div data-role="fieldcontain">
+            <label for="txtTemp">Temperature (°F): </label>
+            <input type="number"  placeholder="0" name="txtTemp"
+            data-mini="false" id="txtTemp"
+            value="">
+          </div>
+          <div data-role="fieldcontain">
+            <label for="txtPressure">Pressure (PSI): </label>
+            <input type="number"  placeholder="0" name="txtPressure"
+            data-mini="false" id="txtPressure"
+            value="">
+          </div>
+        </div>
+        <input type="submit" id="btnSubmitRecord" value="">
+      </form>
+    </div>
   </div>
 
 

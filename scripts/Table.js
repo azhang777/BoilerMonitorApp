@@ -1,4 +1,4 @@
-// Removes all record data from localStorage 
+// Removes all record data from localStorage
 $("#btnClearHistory").click(function () {
   localStorage.removeItem("tbRecords");
   listRecords();
@@ -13,8 +13,7 @@ $("#btnAddRecord").click(function () {
   /*.button("refresh") function forces jQuery
    * Mobile to refresh the text on the button
    */
-  $("#btnSubmitRecord").val("Add").button(
-    "refresh");
+  $("#btnSubmitRecord").val("Add").button("refresh");
 });
 
 $("#frmNewRecordForm").submit(function () {
@@ -24,11 +23,9 @@ $("#frmNewRecordForm").submit(function () {
     addRecord();
     $.mobile.changePage("#pageRecords");
   } else if (formOperation == "Edit") {
-    editRecord($("#btnSubmitRecord").attr(
-      "indexToEdit"));
+    editRecord($("#btnSubmitRecord").attr("indexToEdit"));
     $.mobile.changePage("#pageRecords");
-    $("#btnSubmitRecord").removeAttr(
-      "indexToEdit");
+    $("#btnSubmitRecord").removeAttr("indexToEdit");
   }
 
   /*Must return false, or else submitting form
@@ -46,25 +43,20 @@ $("#pageNewRecordForm").on("pageshow", function () {
     clearRecordForm();
   } else if (formOperation == "Edit") {
     //If we are editing a record we load the stored data in the form
-    showRecordForm($("#btnSubmitRecord").attr(
-      "indexToEdit"));
+    showRecordForm($("#btnSubmitRecord").attr("indexToEdit"));
   }
 });
 
 function loadUserInformation() {
   try {
-    var user = JSON.parse(localStorage.getItem(
-      "user"));
+    var user = JSON.parse(localStorage.getItem("user"));
   } catch (e) {
-    /* Google browsers use different error 
+    /* Google browsers use different error
      * constant
      */
-    if (window.navigator.vendor ===
-      "Google Inc.") {
+    if (window.navigator.vendor === "Google Inc.") {
       if (e == DOMException.QUOTA_EXCEEDED_ERR) {
-        alert(
-          "Error: Local Storage limit exceeds."
-        );
+        alert("Error: Local Storage limit exceeds.");
       }
     } else if (e == QUOTA_EXCEEDED_ERR) {
       alert("Error: Saving to local storage.");
@@ -74,39 +66,17 @@ function loadUserInformation() {
   }
   if (user != null) {
     $("#divUserSection").empty();
-    var today = new Date();
-    var dob = new Date(user.DOB);
-    var age = Math.floor((today - dob) / (
-      365.25 * 24 * 60 * 60 * 1000));
 
-    //Display appropriate Cancer Stage
-    if (user.CancerStage == "StageOne") {
-      user.CancerStage = "Stage I";
-    } else if (user.CancerStage == "StageTwo") {
-      user.CancerStage = "Stage II";
-    } else if (user.CancerStage == "StageThree") {
-      user.CancerStage = "Stage III";
-    } else {
-      user.CancerStage = "Stage IV";
-    }
-
-    //Display appropriate TSH Range
-    if (user.TSHRange == "StageA") {
-      user.TSHRange = "A: 0.01-0.1 mIU/L";
-    } else if (user.TSHRange == "StageB") {
-      user.TSHRange = "B: 0.1-0.5 mIU/L";
-    } else {
-      user.TSHRange = "C: 0.35-2.0 mIU/L";
-    }
-
-    $("#divUserSection").append("User's Name:" +
-      user.FirstName + " " + user.LastName +
-      "<br>Age: " + age +
-      "<br>Health Card Number: " + user.HealthCardNumber +
-      "<br>New Password : " + user.NewPassword +
-      "<br>Cancer Type: " + user.CancerType +
-      "<br>Cancer Stage: " + user.CancerStage +
-      "<br>TSH Range: " + user.TSHRange);
+    $("#divUserSection").append(
+      "Boiler ID: " +
+        user.ID +
+        "<br>Max Temperature: " +
+        user.MaxTemp +
+        " °F" +
+        "<br>Max Pressure: " +
+        user.MaxPressure +
+        " PSI"
+    );
     $("#divUserSection").append(
       "<br><a href='#pageUserInfo' data-mini='true' data-role='button' data-icon='edit' data-iconpos='left' data-inline='true' >Edit Profile</a>"
     );
@@ -115,10 +85,9 @@ function loadUserInformation() {
 }
 
 function clearRecordForm() {
-  $('#datExamDate').val("");
-  $('#txtTSH').val("");
-  $('#txtThyroglobulin').val("");
-  $('#txtSynthroidDose').val("");
+  $("#datExamDate").val("");
+  $("#txtTemp").val("");
+  $("#txtPressure").val("");
   return true;
 }
 
@@ -135,18 +104,14 @@ function compareDates(a, b) {
 
 function listRecords() {
   try {
-    var tbRecords = JSON.parse(localStorage.getItem(
-      "tbRecords"));
+    var tbRecords = JSON.parse(localStorage.getItem("tbRecords"));
   } catch (e) {
-    /* Google browsers use different error 
+    /* Google browsers use different error
      * constant
      */
-    if (window.navigator.vendor ===
-      "Google Inc.") {
+    if (window.navigator.vendor === "Google Inc.") {
       if (e == DOMException.QUOTA_EXCEEDED_ERR) {
-        alert(
-          "Error: Local Storage limit exceeds."
-        );
+        alert("Error: Local Storage limit exceeds.");
       }
     } else if (e == QUOTA_EXCEEDED_ERR) {
       alert("Error: Saving to local storage.");
@@ -163,34 +128,39 @@ function listRecords() {
     //Initializing the table
     $("#tblRecords").html(
       "<thead>" +
-      "   <tr>" +
-      "     <th>Date</th>" +
-      "     <th><abbr title='Thyroid Stimulating Hormone'>TSH(mlU/l)</abbr></th>" +
-      "     <th><abbr title='Thyroglobulin'>Tg(ug/L)</abbr></th>" +
-      "     <th>Synthroid Dose(ug)</th>" +
-      "     <th>Edit / Delete</th>" +
-      "   </tr>" +
-      "</thead>" +
-      "<tbody>" +
-      "</tbody>"
+        "   <tr>" +
+        "     <th>Date</th>" +
+        "     <th><abbr title='Temperature'> Temperature(°F) </abbr></th>" +
+        "     <th><abbr title='Pressure'> Pressure(PSI) </abbr></th>" +
+        "     <th>Edit / Delete</th>" +
+        "   </tr>" +
+        "</thead>" +
+        "<tbody>" +
+        "</tbody>"
     );
 
     //Loop to insert the each record in the table
     for (var i = 0; i < tbRecords.length; i++) {
       var rec = tbRecords[i];
-      $("#tblRecords tbody").append("<tr>" +
-        "  <td>" + rec.Date + "</td>" +
-        "  <td>" + rec.TSH + "</td>" +
-        "  <td>" + rec.Tg + "</td>" +
-        "  <td>" + rec.SynthroidDose +
-        "</td>" +
-        "  <td><a data-inline='true'  data-mini='true' data-role='button' href='#pageNewRecordForm' onclick='callEdit(" +
-        i +
-        ")' data-icon='edit' data-iconpos='notext'></a>" +
-        "  <a data-inline='true'  data-mini='true' data-role='button' href='#' onclick='callDelete(" +
-        i +
-        ")' data-icon='delete' data-iconpos='notext'></a></td>" +
-        "</tr>");
+      $("#tblRecords tbody").append(
+        "<tr>" +
+          "  <td>" +
+          rec.Date +
+          "</td>" +
+          "  <td>" +
+          rec.Temperature +
+          "</td>" +
+          "  <td>" +
+          rec.Pressure +
+          "</td>" +
+          "  <td><a data-inline='true'  data-mini='true' data-role='button' href='#pageNewRecordForm' onclick='callEdit(" +
+          i +
+          ")' data-icon='edit' data-iconpos='notext'></a>" +
+          "  <a data-inline='true'  data-mini='true' data-role='button' href='#' onclick='callDelete(" +
+          i +
+          ")' data-icon='delete' data-iconpos='notext'></a></td>" +
+          "</tr>"
+      );
     }
 
     $('#tblRecords [data-role="button"]').button(); // 'Refresh' the buttons. Without this the delete/edit buttons wont appear
@@ -203,23 +173,18 @@ function listRecords() {
 
 function showRecordForm(index) {
   try {
-    var tbRecords = JSON.parse(localStorage.getItem(
-      "tbRecords"));
+    var tbRecords = JSON.parse(localStorage.getItem("tbRecords"));
     var rec = tbRecords[index];
-    $('#datExamDate').val(rec.Date);
-    $('#txtTSH').val(rec.TSH);
-    $('#txtThyroglobulin').val(rec.Tg);
-    $('#txtSynthroidDose').val(rec.SynthroidDose);
+    $("#datExamDate").val(rec.Date);
+    $("#txtTemp").val(rec.Temperature);
+    $("#txtPressure").val(rec.Pressure);
   } catch (e) {
-    /* Google browsers use different error 
+    /* Google browsers use different error
      * constant
      */
-    if (window.navigator.vendor ===
-      "Google Inc.") {
+    if (window.navigator.vendor === "Google Inc.") {
       if (e == DOMException.QUOTA_EXCEEDED_ERR) {
-        alert(
-          "Error: Local Storage limit exceeds."
-        );
+        alert("Error: Local Storage limit exceeds.");
       }
     } else if (e == QUOTA_EXCEEDED_ERR) {
       alert("Error: Saving to local storage.");
@@ -234,21 +199,25 @@ function showRecordForm(index) {
  * the future
  */
 function checkRecordForm() {
-  //for finding current date 
+  //for finding current date
   var d = new Date();
   var month = d.getMonth() + 1;
   var date = d.getDate();
-  var currentDate = d.getFullYear() + '/' +
-    (('' + month).length < 2 ? '0' : '') +
-    month + '/' +
-    (('' + date).length < 2 ? '0' : '') + date;
+  var currentDate =
+    d.getFullYear() +
+    "/" +
+    (("" + month).length < 2 ? "0" : "") +
+    month +
+    "/" +
+    (("" + date).length < 2 ? "0" : "") +
+    date;
 
-  if (($("#txtTSH").val() != "") &&
-    ($("#datExamDate").val() != "") &&
-    ($("#datExamDate").val() <= currentDate) &&
-    (parseFloat($("#txtSynthroidDose").val()) <
-      1000000) &&
-    ($("#txtSynthroidDose").val() != "")) {
+  if (
+    $("#datExamDate").val() != "" &&
+    $("#datExamDate").val() <= currentDate &&
+    $("#txtTemp").val() != "" &&
+    $("#txtPressure").val() != ""
+  ) {
     return true;
   } else {
     return false;
@@ -256,13 +225,11 @@ function checkRecordForm() {
 }
 
 function callEdit(index) {
-  $("#btnSubmitRecord").attr("indexToEdit",
-    index);
+  $("#btnSubmitRecord").attr("indexToEdit", index);
   /*.button("refresh") function forces jQuery
    * Mobile to refresh the text on the button
    */
-  $("#btnSubmitRecord").val("Edit").button(
-    "refresh");
+  $("#btnSubmitRecord").val("Edit").button("refresh");
 }
 
 // Delete the given index and re-display the table
@@ -274,36 +241,29 @@ function callDelete(index) {
 function addRecord() {
   if (checkRecordForm()) {
     var record = {
-      "Date": $('#datExamDate').val(),
-      "TSH": $('#txtTSH').val(),
-      "Tg": $('#txtThyroglobulin').val(),
-      "SynthroidDose": $('#txtSynthroidDose')
-        .val()
+      Date: $("#datExamDate").val(),
+      Temperature: $("#txtTemp").val(),
+      Pressure: $("#txtPressure").val(),
     };
 
     try {
-      var tbRecords = JSON.parse(localStorage.getItem(
-        "tbRecords"));
+      var tbRecords = JSON.parse(localStorage.getItem("tbRecords"));
       if (tbRecords == null) {
         tbRecords = [];
       }
       tbRecords.push(record);
       tbRecords.sort(compareDates);
-      localStorage.setItem("tbRecords", JSON.stringify(
-        tbRecords));
+      localStorage.setItem("tbRecords", JSON.stringify(tbRecords));
       alert("Saving Information");
       clearRecordForm();
       listRecords();
     } catch (e) {
-      /* Google browsers use different error 
+      /* Google browsers use different error
        * constant
        */
-      if (window.navigator.vendor ===
-        "Google Inc.") {
+      if (window.navigator.vendor === "Google Inc.") {
         if (e == DOMException.QUOTA_EXCEEDED_ERR) {
-          alert(
-            "Error: Local Storage limit exceeds."
-          );
+          alert("Error: Local Storage limit exceeds.");
         }
       } else if (e == QUOTA_EXCEEDED_ERR) {
         alert("Error: Saving to local storage.");
@@ -320,30 +280,25 @@ function addRecord() {
 
 function deleteRecord(index) {
   try {
-    var tbRecords = JSON.parse(localStorage.getItem(
-      "tbRecords"));
+    var tbRecords = JSON.parse(localStorage.getItem("tbRecords"));
 
     tbRecords.splice(index, 1);
 
     if (tbRecords.length == 0) {
-      /* No items left in records, remove entire 
+      /* No items left in records, remove entire
        * array from localStorage
        */
       localStorage.removeItem("tbRecords");
     } else {
-      localStorage.setItem("tbRecords", JSON.stringify(
-        tbRecords));
+      localStorage.setItem("tbRecords", JSON.stringify(tbRecords));
     }
   } catch (e) {
-    /* Google browsers use different error 
+    /* Google browsers use different error
      * constant
      */
-    if (window.navigator.vendor ===
-      "Google Inc.") {
+    if (window.navigator.vendor === "Google Inc.") {
       if (e == DOMException.QUOTA_EXCEEDED_ERR) {
-        alert(
-          "Error: Local Storage limit exceeds."
-        );
+        alert("Error: Local Storage limit exceeds.");
       }
     } else if (e == QUOTA_EXCEEDED_ERR) {
       alert("Error: Saving to local storage.");
@@ -356,31 +311,24 @@ function deleteRecord(index) {
 function editRecord(index) {
   if (checkRecordForm()) {
     try {
-      var tbRecords = JSON.parse(localStorage.getItem(
-        "tbRecords"));
+      var tbRecords = JSON.parse(localStorage.getItem("tbRecords"));
       tbRecords[index] = {
-        "Date": $('#datExamDate').val(),
-        "TSH": $('#txtTSH').val(),
-        "Tg": $('#txtThyroglobulin').val(),
-        "SynthroidDose": $(
-          '#txtSynthroidDose').val()
+        Date: $("#datExamDate").val(),
+        Temperature: $("#txtTemp").val(),
+        Pressure: $("#txtPressure").val(),
       }; //Alter the selected item in the array
       tbRecords.sort(compareDates);
-      localStorage.setItem("tbRecords", JSON.stringify(
-        tbRecords)); //Saving array to local storage
+      localStorage.setItem("tbRecords", JSON.stringify(tbRecords)); //Saving array to local storage
       alert("Saving Information");
       clearRecordForm();
       listRecords();
     } catch (e) {
-      /* Google browsers use different error 
+      /* Google browsers use different error
        * constant
        */
-      if (window.navigator.vendor ===
-        "Google Inc.") {
+      if (window.navigator.vendor === "Google Inc.") {
         if (e == DOMException.QUOTA_EXCEEDED_ERR) {
-          alert(
-            "Error: Local Storage limit exceeds."
-          );
+          alert("Error: Local Storage limit exceeds.");
         }
       } else if (e == QUOTA_EXCEEDED_ERR) {
         alert("Error: Saving to local storage.");
