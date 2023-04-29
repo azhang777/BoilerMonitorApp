@@ -56,16 +56,16 @@ function writeAdvice(ctx, PrefTemp, PrefPressure, Temp, Pressure) {
     img.src = "./assets/warning.png";
   } else if (Temp < PrefTemp) {
     adviceLine1 = "Increase the temperature for the boiler.";
-    img.src = "./assets/safe.png";
+    img.src = "./assets/warning.png";
   } else {
     adviceLine1 = "Temperature is normal";
   }
   if (Pressure > PrefPressure) {
     adviceLine2 = "Lower the PSI for the boiler.";
-    img.src = "./assets/safe.png";
+    img.src = "./assets/warning.png";
   } else if (Pressure < PrefPressure) {
     adviceLine2 = "Increase the PSI for the boiler";
-    img.src = "./assets/safe.png";
+    img.src = "./assets/warning.png";
   } else {
     adviceLine2 = "Pressure is normal";
   }
