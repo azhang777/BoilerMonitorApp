@@ -10,7 +10,7 @@ function advicePage() {
     var tbRecords = JSON.parse(localStorage.getItem("tbRecords"));
     tbRecords.sort(compareDates);
     var i = tbRecords.length - 1;
-    var TSH = tbRecords[i].Temperature;
+    var Temp = tbRecords[i].Temperature;
     var Pressure = tbRecords[i].Pressure;
 
     var c = document.getElementById("AdviceCanvas");
@@ -18,17 +18,17 @@ function advicePage() {
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, 600, 600);
     ctx.font = "22px Arial";
-    drawAdviceCanvas(ctx, TSH, Pressure, PrefTemp, PrefPressure);
-    writeAdvice(ctx, PrefTemp, PrefPressure, TSH, Pressure);
+    drawAdviceCanvas(ctx, Temp, Pressure, PrefTemp, PrefPressure);
+    writeAdvice(ctx, PrefTemp, PrefPressure, Temp, Pressure);
   }
 }
 
-function drawAdviceCanvas(ctx, TSH, Pressure, PrefTemp, PrefPressure) {
+function drawAdviceCanvas(ctx, Temp, Pressure, PrefTemp, PrefPressure) {
   ctx.font = "16px Arial";
   ctx.fillStyle = "black";
   ctx.fillText(
     "The current temperature and pressure for the boiler is " +
-      TSH +
+      Temp +
       " °F and " +
       Pressure +
       " PSI.",
@@ -46,15 +46,15 @@ function drawAdviceCanvas(ctx, TSH, Pressure, PrefTemp, PrefPressure) {
   );
 }
 
-function writeAdvice(ctx, PrefTemp, PrefPressure, TSH, Pressure) {
+function writeAdvice(ctx, PrefTemp, PrefPressure, Temp, Pressure) {
   var adviceLine1 = "";
   var adviceLine2 = "";
   var img = new Image();
   img.src = "./assets/safe.png";
-  if (TSH > PrefTemp) {
+  if (Temp > PrefTemp) {
     adviceLine1 = "Lower the temperature for the boiler.";
     img.src = "./assets/warning.png";
-  } else if (TSH < PrefTemp) {
+  } else if (Temp < PrefTemp) {
     adviceLine1 = "Increase the temperature for the boiler.";
     img.src = "./assets/safe.png";
   } else {

@@ -20,7 +20,7 @@ function setupCanvas() {
   var ctx = c.getContext("2d");
 
   ctx.fillStyle = "#FFFFFF";
-  ctx.fillRect(0, 0, 500, 500);
+  ctx.fillRect(0, 0, 600, 600);
 }
 
 function getHistory(tempArr, pressArr, Datearr) {
@@ -59,16 +59,7 @@ function drawLines(tempArr, pressArr, Datearr) {
     .Set("tickmarks", "filledcircle")
     .Set("ticksize", 5)
     .Set("chart.labels.above", true)
-    .Set("chart.labels.ingraph", [
-      ,
-      ["Temp °F", "white", "red", 0, 30],
-      ,
-      ,
-      ,
-      ,
-      ,
-      ["Pressure PSI", "white", "blue", 0, 30],
-    ])
+
     .Set("chart.title", "Boiler Monitor")
     .Draw();
 }
@@ -78,8 +69,8 @@ function labelAxes() {
   var ctx = c.getContext("2d");
   ctx.font = "11px Georgia";
   ctx.fillStyle = "green";
-  ctx.fillText("Date(MM/DD)", 800, 690);
+  ctx.fillText("Date(MM/DD)", 850, 690);
   ctx.rotate(-Math.PI / 2);
   ctx.textAlign = "center";
-  ctx.fillText("T(RED) & P(BLUE) Value", -350, 10);
+  ctx.fillText("Temp(RED) & Pressure(BLUE) Value", -350, 10);
 }
