@@ -28,8 +28,8 @@ function checkUserForm() {
     $("#txtID").val() != "" &&
     $("#datBirthdate").val() != "" &&
     $("#datBirthdate").val() <= currentDate &&
-    $("#maxTemperature").val() != "" &&
-    $("#maxPressure").val() != ""
+    $("#prefTemperature").val() != "" &&
+    $("#prefPressure").val() != ""
   ) {
     return true;
   } else {
@@ -43,8 +43,8 @@ function saveUserForm() {
       ID: $("#txtID").val(),
       DOB: $("#datBirthdate").val(),
       NewPassword: $("#changePassword").val(),
-      MaxTemp: $("#maxTemperature").val(),
-      MaxPressure: $("#maxPressure").val(),
+      PrefTemp: $("#prefTemperature").val(),
+      PrefPressure: $("#prefPressure").val(),
     };
 
     try {
@@ -100,7 +100,7 @@ function showUserForm() {
     $("#txtID").val(user.ID);
     $("#changePassword").val(user.NewPassword);
     $("#datBirthdate").val(user.DOB);
-    $("#maxTemperature").val(user.MaxTemp);
-    $("#maxPressure").val(user.MaxPressure);
+    $("#prefTemperature").val(user.PrefTemp);
+    $("#prefPressure").val(user.PrefPressure);
   }
 }

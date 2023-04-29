@@ -1,4 +1,4 @@
-<!--Andy Zhang, 04/08/2023, Week 5 Lab 5, Password: 1234-->
+<!--Andy Zhang, 04/25/2023, Week 7 Lab 7, Password: 2222-->
 <!DOCTYPE html>
 <html lang=en manifest="manifest.appcache">
 
@@ -30,6 +30,26 @@
       <div data-role="controlgroup" id="numKeyPad">
         <a data-role="button" id="btnEnter" type="submit">Enter</a>
         <a href="#pageAbout" data-role="button">About</a>
+      </div>
+      <div data-role="controlgroup" data-type="horizontal">
+        <a data-role="button" onclick="addValueToPassword(7)">7</a>
+        <a data-role="button" onclick="addValueToPassword(8)">8</a>
+        <a data-role="button" onclick="addValueToPassword(9)">9</a>
+      </div>
+      <div data-role="controlgroup" data-type="horizontal">
+        <a data-role="button" onclick="addValueToPassword(4)">4</a>
+        <a data-role="button" onclick="addValueToPassword(5)">5</a>
+        <a data-role="button" onclick="addValueToPassword(6)">6</a>
+      </div>
+      <div data-role="controlgroup" data-type="horizontal">
+        <a data-role="button" onclick="addValueToPassword(1)">1</a>
+        <a data-role="button" onclick="addValueToPassword(2)">2</a>
+        <a data-role="button" onclick="addValueToPassword(3)">3</a>
+      </div>
+      <div data-role="controlgroup" data-type="horizontal">
+        <a data-role="button" onclick="addValueToPassword(0)">0</a>
+        <a data-role="button" onclick="addValueToPassword('bksp')"
+        data-icon="delete">del</a>
       </div>
     </div>
   </div>
@@ -89,12 +109,12 @@
           required>
         </div>
         <div data-role="fieldcontain">
-          <label for="maxTemperature" >Maximum Temperature °F: </label>
-          <input type="number" placeholder="Celcius"id="maxTemperature" data-mini="false" min="0" max="200" required>
+          <label for="prefTemperature" >Preferred Temperature °F: </label>
+          <input type="number" placeholder="Celcius"id="prefTemperature" data-mini="false" min="0" max="200" required>
         </div>
         <div data-role="fieldcontain">
-          <label for="maxPressure">Maximum Pressure PSI: </label>
-          <input type="number" placeholder="PSI" id="maxPressure" data-mini="false"  min="0" max="50"required >
+          <label for="prefPressure">Preferred Pressure PSI: </label>
+          <input type="number" placeholder="PSI" id="prefPressure" data-mini="false"  min="0" max="30"required >
         </div>
         <input type="submit" id="btnUserUpdate" data-icon="check"
         data-iconpos="left" value="Update" data-inline="true">
@@ -147,7 +167,7 @@
       </div>
     </div>
   </div>
-
+  
   <!-- New Record Form page -->
   <div data-role="page" id="pageNewRecordForm">
     <div data-role="header">
@@ -170,20 +190,19 @@
             <label for="txtTemp">Temperature (°F): </label>
             <input type="number"  placeholder="0" name="txtTemp"
             data-mini="false" id="txtTemp"
-            value="">
+            value="" max="200">
           </div>
           <div data-role="fieldcontain">
             <label for="txtPressure">Pressure (PSI): </label>
-            <input type="number"  placeholder="0" name="txtPressure"
+            <input type="number"  placeholder="0" name=""
             data-mini="false" id="txtPressure"
-            value="">
+            value="" max="30">
           </div>
         </div>
         <input type="submit" id="btnSubmitRecord" value="">
       </form>
     </div>
   </div>
-
 
   <!--Graph Page -->
   <div data-role="page" id="pageGraph" class="test">
@@ -196,10 +215,10 @@
     </div>
     <div class="panel panel-success">
       <div class="panel-heading">
-        <h3 class="panel-title">Temperature vs Pressure</h3>
+        <h3 class="panel-title">Temperature  & Pressure vs Day</h3>
       </div>
       <div class="panel-body">
-        <canvas id="GraphCanvas" width="500" height="500" style="border:1px solid #000000;">
+        <canvas id="GraphCanvas" width="1000" height="700" style="border:1px solid #000000;">
         </canvas>
       </div>
     </div>
@@ -215,7 +234,7 @@
       <h1>Suggestions</h1>
     </div>
     <div data-role="content">
-      <canvas id="AdviceCanvas" width="550" height="550"
+      <canvas id="AdviceCanvas" width="600" height="600"
       style="border:1px solid #000000;">
       </canvas>
     </div>

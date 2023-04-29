@@ -70,11 +70,11 @@ function loadUserInformation() {
     $("#divUserSection").append(
       "Boiler ID: " +
         user.ID +
-        "<br>Max Temperature: " +
-        user.MaxTemp +
+        "<br>Preferred Temperature: " +
+        user.PrefTemp +
         " °F" +
-        "<br>Max Pressure: " +
-        user.MaxPressure +
+        "<br>Preferred Pressure: " +
+        user.PrefPressure +
         " PSI"
     );
     $("#divUserSection").append(
@@ -147,7 +147,7 @@ function listRecords() {
           "  <td>" +
           rec.Date +
           "</td>" +
-          "  <td>" +
+          "  <td>  / " +
           rec.Temperature +
           "</td>" +
           "  <td>" +
